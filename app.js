@@ -34,13 +34,6 @@ app.get('/generic', (req, res) => {
     })
 })
 
-/* app.get('*', (req, res) => {
-    res.render('home', {
-        nombre: 'Felipe',
-        titulo: 'Curso de node'
-    })
-}) */
-
 app.listen(PORT, () => {
     console.log(`listening at http://localhost:${PORT}`);
 });
