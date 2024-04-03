@@ -1,29 +1,45 @@
-const http = require('http');
+const express = require('express');
+const hbs = require('hbs');
 
-const PORT = 8080
+const app = express();
 
-const server = http.createServer((req, res) => {
-    console.log(req);
+const PORT = 8080;
 
-    res.setHeader('Content-Disposition', 'attachment; filename=lista.csv')
-    res.writeHead(200, {
-        'Content-Type': 'application/csv'
-    });
+hbs.registerPartials( __dirname + '/views/partials');
 
-    /* const persona = {
-           id: 1,
-           nombre: 'Felipe',
-       } */
-    // res.write( JSON.stringify(persona) );
+app.set('view engine', 'hbs');
 
-    res.write('id, nombre\n')
-    res.write('1, Fernando\n')
-    res.write('2, Maria\n')
-    res.write('3, Juan\n')
-    res.write('4, Pedro\n')
-    res.end();
+// Servir contenido estatico
+app.use(express.static('public'));
+
+app.get('/', (req, res) => {
+    res.render('home', {
+        nombre: 'Felipe',
+        titulo: 'Curso de node'
+    })
 })
 
-server.listen(PORT);
+app.get('/elements', (req, res) => {
+    res.render('elements', {
+        nombre: 'Felipe',
+        titulo: 'Curso de node'
+    })
+})
 
-console.log("Escuchando en el puerto: ", PORT);
+app.get('/generic', (req, res) => {
+    res.render('generic', {
+        nombre: 'Felipe',
+        titulo: 'Curso de node'
+    })
+})
+
+/* app.get('*', (req, res) => {
+    res.render('home', {
+        nombre: 'Felipe',
+        titulo: 'Curso de node'
+    })
+}) */
+
+app.listen(PORT, () => {
+    console.log(`listening at http://localhost:${PORT}`);
+});
